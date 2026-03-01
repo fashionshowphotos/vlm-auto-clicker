@@ -2,7 +2,7 @@
   "name": "vlm-auto-clicker-vscode",
   "displayName": "VLM Auto-Clicker",
   "description": "Auto-clicks Accept, Apply and Run buttons in Copilot, Cursor, Windsurf and Antigravity. VLM teaches once, OCR runs free forever. Stop clicking, start building.",
-  "publisher": "coherent-light",
+  "publisher": "coherentlight",
   "version": "0.1.0",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "icon.png",
