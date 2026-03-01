@@ -1,0 +1,5 @@
+node_modules/
+firejumper_state/
+state/
+debug_*.png
+*.log

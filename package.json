@@ -1,0 +1,51 @@
+{
+  "name": "vlm-auto-clicker",
+  "version": "1.0.0",
+  "description": "Vision-powered IDE button automation using teacher-student learning loop",
+  "type": "module",
+  "main": "core_binary.mjs",
+  "license": "UNLICENSED",
+  "author": "Coherent Light Designs",
+  "homepage": "https://github.com/CoherentLightDesigns/vlm-auto-clicker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CoherentLightDesigns/vlm-auto-clicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CoherentLightDesigns/vlm-auto-clicker/issues"
+  },
+  "keywords": [
+    "ai",
+    "automation",
+    "ocr",
+    "vision",
+    "ide",
+    "autoclick"
+  ],
+  "files": [
+    "core-bin/",
+    "core_binary.mjs",
+    "start.js",
+    "diagnose.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/ensure-tests.cjs && node --test tests/**/*.test.js",
+    "test:watch": "node scripts/ensure-tests.cjs && node --test --watch tests/**/*.test.js",
+    "build:core-binary": "node ..\\scripts\\rebuild_core_bundle.mjs --app .",
+    "vscode:install": "powershell -ExecutionPolicy Bypass -File scripts/install_vscode_extension.ps1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "bytenode": "^1.5.7",
+    "screenshot-desktop": "^1.15.3",
+    "sharp": "^0.34.5",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "name": "vlm-auto-clicker-vscode",
+  "displayName": "VLM Auto-Clicker",
+  "description": "Auto-clicks Accept, Apply and Run buttons in Copilot, Cursor, Windsurf and Antigravity. VLM teaches once, OCR runs free forever. Stop clicking, start building.",
+  "publisher": "coherent-light",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1a1a2e",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "keywords": [
+    "ai", "automation", "copilot", "cursor", "windsurf", "accept", "auto-click", "ocr", "vision"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fashionshowphotos/vlm-auto-clicker.git"
+  },
+  "homepage": "https://github.com/fashionshowphotos/vlm-auto-clicker#readme",
+  "main": "./extension.cjs",
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:vlmAutoClicker.start",
+    "onCommand:vlmAutoClicker.stop",
+    "onCommand:vlmAutoClicker.restart",
+    "onCommand:vlmAutoClicker.status",
+    "onCommand:vlmAutoClicker.runTests",
+    "onCommand:vlmAutoClicker.openReadme",
+    "onCommand:vlmAutoClicker.openProjectRoot"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "vlmAutoClicker.start",
+        "title": "VLM Auto-Clicker: Start"
+      },
+      {
+        "command": "vlmAutoClicker.stop",
+        "title": "VLM Auto-Clicker: Stop"
+      },
+      {
+        "command": "vlmAutoClicker.restart",
+        "title": "VLM Auto-Clicker: Restart"
+      },
+      {
+        "command": "vlmAutoClicker.status",
+        "title": "VLM Auto-Clicker: Status"
+      },
+      {
+        "command": "vlmAutoClicker.runTests",
+        "title": "VLM Auto-Clicker: Run Tests"
+      },
+      {
+        "command": "vlmAutoClicker.openReadme",
+        "title": "VLM Auto-Clicker: Open README"
+      },
+      {
+        "command": "vlmAutoClicker.openProjectRoot",
+        "title": "VLM Auto-Clicker: Open Project Root"
+      }
+    ],
+    "configuration": {
+      "title": "VLM Auto-Clicker",
+      "properties": {
+        "vlmAutoClicker.rootPath": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the VLM Auto-Clicker project root."
+        },
+        "vlmAutoClicker.runCommand": {
+          "type": "string",
+          "default": "node start.js",
+          "description": "Shell command used by 'VLM Auto-Clicker: Start'."
+        },
+        "vlmAutoClicker.testCommand": {
+          "type": "string",
+          "default": "npm test",
+          "description": "Shell command used by 'VLM Auto-Clicker: Run Tests'."
+        },
+        "vlmAutoClicker.autoStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically run 'VLM Auto-Clicker: Start' when VS Code starts."
+        },
+        "vlmAutoClicker.showOutputOnStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Focus the extension output channel when starting."
+        }
+      }
+    }
+  }
+}
+
