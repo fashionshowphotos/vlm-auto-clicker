@@ -19,10 +19,41 @@ const ALLOWED_COMMANDS = new Set([
 // Fix 7: Shell operator blocklist
 const SHELL_OPERATORS = ['|', '&', ';', '`', '$', '>', '<', '$(', '${'];
 
+const MANIFEST_DIR = path.join(process.env.APPDATA || '', 'CoherentLight', 'manifests');
+const MANIFEST_FILE = path.join(MANIFEST_DIR, 'coherentlight.vlm-auto-clicker-vscode.json');
+const pkg = (() => { try { return require('./package.json'); } catch { return {}; } })();
+
 let output;
 let statusItem;
 let runtimeProcess = null;
 let runtimeRoot = null;
+
+function writeManifest() {
+  try {
+    fs.mkdirSync(MANIFEST_DIR, { recursive: true });
+    const manifest = {
+      id: 'coherentlight.vlm-auto-clicker-vscode',
+      displayName: PRODUCT_NAME,
+      version: pkg.version || '0.1.0',
+      state: {
+        running: !!runtimeProcess,
+        pid: runtimeProcess ? (runtimeProcess.pid || null) : null,
+        root: runtimeRoot || null,
+      },
+      capabilities: {
+        commands: ['start', 'stop', 'restart', 'status', 'manifest'],
+        actions: ['auto-click Accept/Apply/Run buttons using OCR'],
+        config: {
+          rootPath: String(cfg().get('rootPath', '') || ''),
+          runCommand: String(cfg().get('runCommand', DEFAULT_RUN_COMMAND) || ''),
+          autoStart: !!cfg().get('autoStart', false),
+        },
+      },
+      updatedAt: new Date().toISOString(),
+    };
+    fs.writeFileSync(MANIFEST_FILE, JSON.stringify(manifest, null, 2));
+  } catch { /* non-fatal */ }
+}
 
 function log(message) {
   if (!output) {
@@ -135,6 +166,7 @@ function updateStatus() {
 
   statusItem.command = `${COMMAND_PREFIX}.status`;
   statusItem.show();
+  writeManifest();
 }
 
 function startProcess() {
@@ -324,7 +356,12 @@ async function activate(context) {
     vscode.commands.registerCommand(`${COMMAND_PREFIX}.status`, withErrorHandling(showStatus)),
     vscode.commands.registerCommand(`${COMMAND_PREFIX}.runTests`, withErrorHandling(runTests)),
     vscode.commands.registerCommand(`${COMMAND_PREFIX}.openReadme`, withErrorHandling(openReadme)),
-    vscode.commands.registerCommand(`${COMMAND_PREFIX}.openProjectRoot`, withErrorHandling(openProjectRoot))
+    vscode.commands.registerCommand(`${COMMAND_PREFIX}.openProjectRoot`, withErrorHandling(openProjectRoot)),
+    vscode.commands.registerCommand(`${COMMAND_PREFIX}.manifest`, () => {
+      writeManifest();
+      const manifest = JSON.parse(fs.readFileSync(MANIFEST_FILE, 'utf8'));
+      return manifest;
+    })
   );
 
   context.subscriptions.push({
@@ -345,6 +382,7 @@ async function activate(context) {
     await withErrorHandling(startProcess)();
   }
 
+  writeManifest();
   log(`${PRODUCT_NAME} extension activated.`);
 }
 
